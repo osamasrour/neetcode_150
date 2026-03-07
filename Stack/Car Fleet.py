@@ -1,5 +1,5 @@
 # Car Fleet: https://neetcode.io/problems/car-fleet/question?list=neetcode150
-# TODO: Continue
+
 class Solution:
     def carFleet(self, target: int, position: list[int], speed: list[int]) -> int:
         n = len(position)
@@ -25,18 +25,29 @@ class Solution:
                 py = position[fleets[j][0]]
                 ty = times[fleets[j][0]]
                 sy = speed[fleets[j][0]]
-                vdx: int # Virtual distance
-                vdx = sx * dy / sy
-                vdy = sy * dx / sx
-                print("dx = ", dx, ",tx = ", tx, ",sx = ", sx, ",dy = ", dy, ",ty = ", ty, ",sy = ", sy, ",vdx = ", vdx)
-                if vdx <= dx and vdx + px == dy + py and vdy + py == dx + px:
-                    found_fleet = True
+
+                # handle the zero divesion
+                if sx == sy:
+                    if px == py:
+                        found_fleet = True 
+                        fleets[j].append(i)
+                        if times[fleets[j][-1]] > times[fleets[j][0]]:
+                            fleets[j][0], fleets[j][-1] =  fleets[j][-1], fleets[j][0]
+                        break
+                    else:
+                        break
+
+                meet_time = abs(px- py) / (abs(sx- sy))
+                if meet_time <= min(tx, ty) and (px + (meet_time * sx)) == (py + (meet_time * sy)):
+                    found_fleet = True 
                     fleets[j].append(i)
+                    if times[fleets[j][-1]] > times[fleets[j][0]]:
+                        fleets[j][0], fleets[j][-1] =  fleets[j][-1], fleets[j][0]
                     break
             if not found_fleet:
                 fleets.append([])
                 fleets[-1].append(i)
-                print(fleets)
+            print(fleets)
         return len(fleets)
 
 
@@ -66,4 +77,12 @@ target=12
 position=[10,8,0,5,3]
 speed=[2,4,1,1,3]
 print(obj.carFleet(target, position, speed) == 3)
+print("=" * 25)
+
+
+# TODO: It fails in the third test case.
+target=12
+position=[4,0,5,3,1,2]
+speed=[6,10,9,6,7,2]
+print(obj.carFleet(target, position, speed) == 4)
 print("=" * 25)
