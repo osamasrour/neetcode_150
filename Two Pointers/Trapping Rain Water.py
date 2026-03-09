@@ -1,5 +1,5 @@
 # Trapping Rain Water: https://neetcode.io/problems/trapping-rain-water/question?list=neetcode150
-# TODO: make it O(n)
+# TODO(#2): make it O(n)
 class Solution:
     def trap(self, height: list[int]) -> int:
         n = len(height)
