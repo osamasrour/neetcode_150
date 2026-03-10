@@ -1,5 +1,5 @@
 # Largest Rectangle In Histogram: https://neetcode.io/problems/largest-rectangle-in-histogram/question?list=neetcode150
-
+# TODO(#3): it's O(n^2)
 class Solution:
     def largestRectangleArea(self, heights: list[int]) -> int:
         n = len(heights)
