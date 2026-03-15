@@ -11,36 +11,8 @@ class Solution:
         else:
             while l < r:
                 m = l+((r- l) // 2)
-                if nums[m] < nums[m + 1] and nums[m] < nums[l]: # WARNING: out of range for the one element array
+                if nums[m] < nums[m + 1] and nums[m] < nums[0]:
                     r = m
                 else:
                     l = m + 1
             return nums[l]
-
-
-
-
-
-
-obj = Solution()
-
-nums = [3,4,5,6,1,2]
-print(obj.findMin(nums) == 1)
-
-nums = [4,5,0,1,2,3]
-print(obj.findMin(nums) == 0)
-
-nums = [4,5,6,7]
-print(obj.findMin(nums) == 4)
-
-nums = [4]
-print(obj.findMin(nums) == 4)
-
-nums = [4, 5]
-print(obj.findMin(nums) == 4)
-
-nums = [5, 4]
-print(obj.findMin(nums) == 4)
-
-nums=[3,4,5,1,2]
-print(obj.findMin(nums) == 1)
