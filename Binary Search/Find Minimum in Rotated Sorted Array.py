@@ -3,7 +3,6 @@
 class Solution:
     def findMin(self, nums: list[int]) -> int:
         n = len(nums)
-        current_min = float("inf")
         l, r = 0, n-1
         if n == 1: return nums[0]
         if nums[l] < nums[r]:
