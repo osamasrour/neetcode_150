@@ -1,5 +1,5 @@
 # Search in Rotated Sorted Array: https://neetcode.io/problems/find-target-in-rotated-sorted-array/question?list=neetcode150
-
+# TODO(#4): Prettify the code, make it less spaghetti.
 class Solution:
     def search(self, nums: list[int], target: int) -> int:
         n = len(nums)
