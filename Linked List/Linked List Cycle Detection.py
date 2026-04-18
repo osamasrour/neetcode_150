@@ -9,16 +9,10 @@
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         current = head
-
-        lst: list[int] = []
-        
-        while True:
-            if current not in lst and current != None:
-                lst.append(current)
-
-            elif current == None:
-                return False
-
+        hashLst = set()
+        while current:
+            if current not in hashLst and current != None:
+                hashLst.add(current)
             else:
                 return True
             current = current.next
