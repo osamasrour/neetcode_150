@@ -17,8 +17,8 @@ class Dll:
         if self.front == None:
             assert self.last == None and self.count == 0
             node = Node(key, val)
-            node.prev = node
-            node.next = node
+            node.prev = None
+            node.next = None
             self.last = self.front = node
             self.count = 1
         else:
@@ -44,6 +44,12 @@ class Dll:
             self.count += 1
 
     def remove(self, node: Node):
+        if not (node and self.count): return
+        if self.count == 1 and node == self.front:
+            self.front = None
+            self.last = None
+            self.count -=1
+            return
         if self.front == node:
             self.front = self.front.next
             self.front.prev = None
@@ -69,9 +75,14 @@ class Dll:
 
 
     def pop(self) -> Node:
+        if not self.last: return None
         lastNode = self.last
-        self.last = self.last.prev
-        self.last.next = None
+        if self.count == 1:
+            self.last = None
+            self.front = None
+        else:
+            self.last = self.last.prev
+            self.last.next = None
         self.count -= 1
         return lastNode
 
@@ -98,8 +109,9 @@ class LRUCache:
             self.hm[key].val = value
             return
         if self.dll.count + 1 > self.cap:
-            del self.hm[self.dll.last.key]
-            self.dll.pop()
+            poped = self.dll.pop()
+            assert(poped.key in self.hm)
+            del self.hm[poped.key]
 
         assert(self.dll.count < self.cap)
         self.dll.addFront(key, value)
