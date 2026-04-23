@@ -44,22 +44,41 @@ class Dll:
 
     def pop(self) -> Node:
         lastNode = self.last
-        lastNode.prev = None
-        lastNode.next = None
         self.last = self.last.prev
         self.last.next = None
+        lastNode.prev = None
+        lastNode.next = None
         self.count -= 1
         return lastNode
-
 
 
 class LRUCache:
 
     def __init__(self, capacity: int):
-        pass
+        self.cap = capacity
+        self.hm: dict[int: Node] = dict()
+        self.dll = Dll()
+
 
     def get(self, key: int) -> int:
-        pass
+        ret = self.hm.get(key, -1)
+        if ret != -1:
+            ret = ret.val
+        return ret
 
     def put(self, key: int, value: int) -> None:
-        pass  
+        if self.dll.count + 1 > self.cap:
+            rm = []
+            for k, v in self.hm.items():
+                if self.hm[k] == self.dll.last:
+                    rm.append(k)
+
+            assert(len(rm) == 1)
+            del self.hm[rm[0]]
+            self.dll.pop()
+
+        assert(self.dll.count < self.cap)
+
+        self.dll.addFront(value)
+        self.hm[key] = self.dll.front
+
