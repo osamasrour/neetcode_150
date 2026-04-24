@@ -106,7 +106,9 @@ class LRUCache:
 
     def put(self, key: int, value: int) -> None:
         if self.hm.get(key) != None:
-            self.hm[key].val = value
+            self.dll.remove(self.hm.get(key))
+            self.dll.addFront(key, value)
+            self.hm[key]= self.dll.front
             return
         if self.dll.count + 1 > self.cap:
             poped = self.dll.pop()
@@ -117,33 +119,3 @@ class LRUCache:
         self.dll.addFront(key, value)
         self.hm[key] = self.dll.front
         assert len(self.hm) == self.dll.count
-
-# ["LRUCache", [2], "put", [1, 10],
-  # "get", [1], "put", [2, 20], "put", [3, 30], "get", [2], "get", [1]]
-
-# [null,null,10,null,null,20,-1]
-
-cache = LRUCache(2)
-print(cache.put(1,10) == None)
-print(cache.get(1) == 10)
-print(cache.put(2,20) == None)
-print(cache.put(3,30) == None)
-print(cache.get(2) == 20)
-print(cache.get(1) == -1)
-
-# ["LRUCache", [2], "put", [1, 1], "put", [2, 2], "get", [1], "put", [3, 3], 
-# "get", [2], "put", [4, 4], "get", [1], "get", [3], "get", [4]]
-
-# [null,null,null,1,null,-1,null,-1,3,4]
-
-cache = LRUCache(2)
-print(cache.put(1, 1) == None)
-print(cache.put(2, 2) == None)
-print(cache.get(1) == 1)
-print(cache.put(3, 3) == None)
-print(cache.get(2) == -1) # should be -1
-
-print(cache.put(4, 4) == None)
-print(cache.get(1) == -1)
-print(cache.get(3) == 3)
-print(cache.get(4) == 4)
