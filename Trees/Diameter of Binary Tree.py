@@ -11,18 +11,12 @@ class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
-            
-        return self.trace(root.left) + self.trace(root.right)
+        self.maxpath = 0
+        self.trace(root)
+        return self.maxpath
 
     def trace(self, root):
         if not root:
             return 0
-
+        self.maxpath = max(self.trace(root.left) + self.trace(root.right), self.maxpath)
         return max(self.trace(root.left), self.trace(root.right)) + 1
-
-
-
-#     1
-#         2
-#     3        4
-# 5
