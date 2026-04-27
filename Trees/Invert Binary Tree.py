@@ -12,8 +12,11 @@ class Solution:
         curr = root
         if not root:
             return None
+        if curr.right:
+            self.invertTree(curr.right)
         if curr.left: 
             self.invertTree(curr.left)
             curr.left, curr.right = curr.right, curr.left
+
 
         return curr
