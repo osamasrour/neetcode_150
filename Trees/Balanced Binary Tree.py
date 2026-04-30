@@ -14,7 +14,7 @@ class Solution:
 
         left = self.trace(curr.left)
         right = self.trace(curr.right)
-
+        if left < 0 or right < 0: return False
         return abs(left - right) <= 1
 
     def trace(self, node):
@@ -22,5 +22,7 @@ class Solution:
 
         left = self.trace(node.left)
         right = self.trace(node.right)
+
+        if left < 0 or right < 0 or not (abs(left - right) <= 1): return -1
 
         return max(left, right) + 1
