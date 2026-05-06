@@ -28,7 +28,7 @@ class Solution:
         if root and not subRoot: return False
         if not root and subRoot: return False
 
+        if self.isSameTree(root, subRoot): self.foundSub = True
         l = self.isSubtree(root.left, subRoot)
         r = self.isSubtree(root.right, subRoot)
-        if self.isSameTree(root, subRoot): self.foundSub = True
         return self.foundSub
