@@ -8,6 +8,7 @@
 #         self.right = right
 
 class Solution:
+    # TODO get rid of that attribute 'foundSub'
     foundSub = False
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         if not p and not q : return True
