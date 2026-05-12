@@ -9,29 +9,29 @@
 
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
-        hMap: set[int] = set()
+        count: list[int] = [0] # This is a hack, because we can't pass int by reference in Python.
         stack = []
-        self._goodNodes(root, hMap, stack)
-        return len(hMap)
+        self._goodNodes(root, count, stack)
+        return count[0]
 
-    def _goodNodes(self, node: TreeNode, HashMap: set[int], stack: list) -> bool:
+    def _goodNodes(self, node: TreeNode, count: list[int], stack: list) -> bool:
         add = False
-        if not node:
-            for e in stack:
-                HashMap.add(e)
-            return add
+        if not node: return add
 
         if stack:
-            if node.val > stack[-1]:
+            if node.val >= stack[-1]:
                 stack.append(node.val)
+                count[0]+=1
                 add = True
         else:
             stack.append(node.val)
+            count[0]+=1
             add = True
 
-        print(stack)
-        l_add = self._goodNodes(node.left, HashMap, stack)
-        if l_add: stack.pop()
-        r_add = self._goodNodes(node.right, HashMap, stack)
-        if r_add: stack.pop()
+        l_add = self._goodNodes(node.left, count, stack)
+        if l_add: 
+            stack.pop()
+        r_add = self._goodNodes(node.right, count, stack)
+        if r_add: 
+            stack.pop()
         return add
