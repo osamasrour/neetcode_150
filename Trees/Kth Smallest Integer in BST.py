@@ -8,15 +8,16 @@
 #         self.right = right
 
 class Solution:
-    def _inOrderTrav(self, node: Optional[TreeNode], sortedList: list[int]) -> None:
+    def _inOrderTrav(self, node: Optional[TreeNode], sortedList: list[int], k: int) -> None:
         if not node:
             return
 
-        self._inOrderTrav(node.left, sortedList)
+        self._inOrderTrav(node.left, sortedList, k)
+        if len(sortedList) == k: return None
         sortedList.append(node.val)
-        self._inOrderTrav(node.right, sortedList)
+        self._inOrderTrav(node.right, sortedList, k)
 
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         sortedList = []
-        self._inOrderTrav(root, sortedList)
-        return sortedList[k-1]
+        self._inOrderTrav(root, sortedList, k)
+        return sortedList[-1]
