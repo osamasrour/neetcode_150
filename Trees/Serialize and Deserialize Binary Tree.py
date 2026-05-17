@@ -6,8 +6,7 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-
-from collections import deque
+import sys
 class Codec:
     def find(self, lst, val):
         if val not in lst:
@@ -21,8 +20,9 @@ class Codec:
         root = TreeNode(preorder[0])
         mid = self.find(inorder, preorder[0])
         if mid == -1:
-            print(preorder[0])
-            exit(-1)
+            print(inorder, preorder[0])
+            sys.stdout.flush()
+            assert(0)
 
         root.left = self.buildTree(preorder[1:mid+1], inorder[:mid])
         root.right = self.buildTree(preorder[mid+1:], inorder[mid+1:])
@@ -30,13 +30,14 @@ class Codec:
 
     def preOrderTrav(self, root) -> list[int]:
         res: list[Optional[int]]= []
-        q = deque([root])
-        while q:
-            node = q.popleft()
-            if node: 
-                res.append(node.val)
-                if node.left: q.append(node.left)
-                if node.right: q.append(node.right)
+        if not root: return
+        def dfs(root):
+            nonlocal res
+            if not root :return None
+            res.append(root.val)
+            if root.left: dfs(root.left)
+            if root.right: dfs(root.right)
+        dfs(root)
         return res
 
     def inOrderTrav(self, root) -> list[int]:
@@ -74,19 +75,10 @@ class Codec:
         _preOrder, _inOrder = data.split(";")
         _preOrder = _preOrder.split(",")
         _inOrder = _inOrder.split(",")
-        print(_preOrder)
+        # print(_preOrder)
         preOrder = list(map(lambda x: int(x), _preOrder))
         inOrder = list(map(lambda x: int(x), _inOrder))
         print(preOrder)
         print(inOrder)
         root = self.buildTree(preOrder, inOrder)
         return root
-
-"""
-[1,2,3,null,null,4,5,null,null,null,null]
-[0,1,2, 3,   4,  5,6]
-l = i + 1
-r = i + 2
-
-
-"""
