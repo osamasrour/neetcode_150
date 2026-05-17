@@ -8,23 +8,17 @@
 #         self.right = right
 
 class Solution:
-    def inOrderTrav(self, root: Optional[TreeNode], lst: list[int]):
-        if not root: return
+    def dfs(self, node: Optional[TreeNode], maxPath: list[int]):
+        if not node: return 0
 
-        self.inOrderTrav(root.left, lst)
-        lst.append(root.val)
-        self.inOrderTrav(root.right, lst)
+        leftPath  = self.dfs(node.left , maxPath)
+        rightPath = self.dfs(node.right, maxPath)
+        termVal = node.val + leftPath + rightPath
+        val = max(node.val, node.val + leftPath, node.val + rightPath)
+        maxPath[0] = max(maxPath[0], termVal, val)
+        return val
 
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
-        if not root: return 0
-        inOrdLst: list[int] = []
-        self.inOrderTrav(root, inOrdLst)
-        print("inOrdLst = ", inOrdLst)
-        maxSum = float("-inf")
-        n = len(inOrdLst)
-        for i in range(n):
-            for j in range(n, i, -1):
-                s = sum(inOrdLst[i: j])
-                maxSum = max(s, maxSum)
-
-        return maxSum
+        res = [float("-inf")]
+        self.dfs(root, res)
+        return res[0]
